@@ -27,3 +27,4 @@ behavior can emerge from very simple rules.
 Practically speaking, CAs have been used in biological and chemical simulations
 and other areas of research, such as CA-based computer processors, and other
 numeric techniques.
+
