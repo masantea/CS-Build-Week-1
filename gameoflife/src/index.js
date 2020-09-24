@@ -2,22 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-class Grid extends React.Component{
-  render(){
-    return(
-      <div>
-       GRID
-      </div>
-    );
-  }
-}
-
 
 class Main extends React.Component{
   constructor(){
     super();
+    this.speed = 100;
+    this.rows = 30;
+    this.cols = 50;
+
     this.state = {
       generation: 0,
+      gridFull: Array(this.rows).fill().map(() => Array(this.cols).fill(false))
     }
   }
 
@@ -31,6 +26,5 @@ class Main extends React.Component{
       </div>
     );
   }
-
 }
 ReactDOM.render(<Main />, document.getElementById('root'));
