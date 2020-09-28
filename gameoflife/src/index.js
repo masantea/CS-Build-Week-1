@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { ButtonGroup, Dropdown } from 'react-bootstrap';
+import { ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap';
 
 class Box extends React.Component{
   selectBox = () => {
@@ -60,33 +60,49 @@ class Buttons extends React.Component {
 		return (
 			<div className="center">
 				<ButtonGroup>
-					<button className="btn btn-default" onClick={this.props.playButton}>
+					<button className="btn-default" onClick={this.props.playButton}>
 						Play
 					</button>
-					<button className="btn btn-default" onClick={this.props.pauseButton}>
+					<button className="btn-default" onClick={this.props.pauseButton}>
 					  Pause
 					</button>
-					<button className="btn btn-default" onClick={this.props.clear}>
+					<button className="btn-default" onClick={this.props.clear}>
 					  Clear
 					</button>
-					<button className="btn btn-default" onClick={this.props.slow}>
+					<button className="btn-default" onClick={this.props.slow}>
 					  Slow
 					</button>
-					<button className="btn btn-default" onClick={this.props.fast}>
+					<button className="btn-default" onClick={this.props.fast}>
 					  Fast
 					</button>
-					<button className="btn btn-default" onClick={this.props.seed}>
+					<button className="btn-default"onClick={this.props.seed}>
 					  Seed
 					</button>
-					<Dropdown
+					{/* <DropdownButton
 						title="Grid Size"
 						id="size-menu"
 						onSelect={this.handleSelect}
 					>
+            
 						<Dropdown-item eventKey="1">20x10</Dropdown-item>
 						<Dropdown-item eventKey="2">50x30</Dropdown-item>
 						<Dropdown-item eventKey="3">70x50</Dropdown-item>
-					</Dropdown>
+					</DropdownButton> */}
+          <DropdownButton
+            id="dropdown-item-button"
+            title="Dropdown button"
+            onSelect={this.handleSelect}
+          >
+            <Dropdown.Item as="button" eventKey="1">
+              20x10
+            </Dropdown.Item>
+            <Dropdown.Item as="button" eventKey="2">
+              50x30
+            </Dropdown.Item>
+            <Dropdown.Item as="button" eventKey="3">
+              70x50
+            </Dropdown.Item>
+          </DropdownButton>
 				</ButtonGroup>
 			</div>
 			)
@@ -173,31 +189,31 @@ class Main extends React.Component {
 
 	}
 
-	play = () => {
-		let g = this.state.gridFull;
-		let g2 = arrayClone(this.state.gridFull);
-
-		for (let i = 0; i < this.rows; i++) {
-		  for (let j = 0; j < this.cols; j++) {
-		    let count = 0;
-		    if (i > 0) if (g[i - 1][j]) count++;
-		    if (i > 0 && j > 0) if (g[i - 1][j - 1]) count++;
-		    if (i > 0 && j < this.cols - 1) if (g[i - 1][j + 1]) count++;
-		    if (j < this.cols - 1) if (g[i][j + 1]) count++;
-		    if (j > 0) if (g[i][j - 1]) count++;
-		    if (i < this.rows - 1) if (g[i + 1][j]) count++;
-		    if (i < this.rows - 1 && j > 0) if (g[i + 1][j - 1]) count++;
-		    if (i < this.rows - 1 && j < this.cols - 1) if (g[i + 1][j + 1]) count++;
-		    if (g[i][j] && (count < 2 || count > 3)) g2[i][j] = false;
-		    if (!g[i][j] && count === 3) g2[i][j] = true;
-		  }
-		}
-		this.setState({
-		  gridFull: g2,
-		  generation: this.state.generation + 1
-		});
-
-	}
+  play = () => {
+    let g = this.state.gridFull;
+    let g2 = arrayClone(this.state.gridFull);
+  
+    for (let i = 0; i < this.rows; i++) {
+      for (let j = 0; j < this.cols; j++) {
+        let count = 0;
+        if (i > 0) if (g[i - 1][j]) count++;
+        if (i > 0 && j > 0) if (g[i - 1][j - 1]) count++;
+        if (i > 0 && j < this.cols - 1) if (g[i - 1][j + 1]) count++;
+        if (j < this.cols - 1) if (g[i][j + 1]) count++;
+        if (j > 0) if (g[i][j - 1]) count++;
+        if (i < this.rows - 1) if (g[i + 1][j]) count++;
+        if (i < this.rows - 1 && j > 0) if (g[i + 1][j - 1]) count++;
+        if (i < this.rows - 1 && this.cols - 1) if (g[i + 1][j + 1]) count++;
+        if (g[i][j] && (count < 2 || count > 3)) g2[i][j] = false;
+        if (!g[i][j] && count === 3) g2[i][j] = true;
+      }
+    }
+    this.setState({
+      gridFull: g2,
+      generation: this.state.generation + 1
+    });
+  
+  }
 
 	componentDidMount() {
 		this.seed();
